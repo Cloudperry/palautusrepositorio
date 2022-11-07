@@ -1,9 +1,19 @@
 from player_reader import PlayerReader
+from enum import Enum
 
+class SortBy(Enum):
+    POINTS = 1
+    GOALS = 2
+    ASSISTS = 3
 
 def sort_by_points(player):
     return player.points
 
+def sort_by_goals(player):
+    return player.goals
+
+def sort_by_assists(player):
+    return player.assists
 
 class Statistics:
     def __init__(self, reader = PlayerReader()):
@@ -26,11 +36,21 @@ class Statistics:
 
         return list(players_of_team)
 
-    def top(self, how_many):
+    def top(self, how_many, sort_by = SortBy.POINTS):
+        sort_function = None
+        if sort_by == SortBy.POINTS:
+            sort_function = sort_by_points
+        elif sort_by == SortBy.GOALS:
+            sort_function = sort_by_goals
+        elif sort_by == SortBy.ASSISTS:
+            sort_function = sort_by_assists
+        else:
+            raise ValueError("sort_by should be a member of the enum SortBy.")
+
         sorted_players = sorted(
             self._players,
             reverse=True,
-            key=sort_by_points
+            key=sort_function
         )
 
         result = []

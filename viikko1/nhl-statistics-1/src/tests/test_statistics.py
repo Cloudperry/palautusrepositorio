@@ -1,5 +1,5 @@
 import unittest
-from statistics import Statistics
+from statistics import Statistics, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -47,3 +47,18 @@ class TestStatistics(unittest.TestCase):
         self.assertEqual(top3[0].name, "Gretzky")
         self.assertEqual(top3[1].name, "Lemieux")
         self.assertEqual(top3[2].name, "Yzerman")
+
+    def test_top_assists(self):
+        top2 = self.statistics.top(2, SortBy.ASSISTS)
+        self.assertEqual(top2[0].name, "Gretzky")
+        self.assertEqual(top2[1].name, "Yzerman")
+
+    def test_top_goals(self):
+        top3 = self.statistics.top(3, SortBy.GOALS)
+        self.assertEqual(top3[0].name, "Lemieux")
+        self.assertEqual(top3[1].name, "Yzerman")
+        self.assertEqual(top3[2].name, "Kurri")
+
+    def test_top_rejects_invalid_sorting(self):
+        with self.assertRaises(ValueError):
+            self.statistics.top(3, "Python sucks")
