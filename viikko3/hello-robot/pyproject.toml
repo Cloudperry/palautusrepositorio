@@ -8,7 +8,7 @@ authors = ["Kalle Ilves <kalle.ilves@helsinki.fi>"]
 python = "^3.8"
 Flask = "^2.2.2"
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.dev-dependencies]
 robotframework = "^6.0.0"
 
 [build-system]
