@@ -2,9 +2,9 @@ from ostoskori import Ostoskori
 
 class Kauppa:
     def __init__(self, varasto, pankki, viitegeneraattori):
-        self._varasto = varasto.get_instance()
-        self._pankki = pankki.get_instance()
-        self._viitegeneraattori = viitegeneraattori.get_instance()
+        self._varasto = varasto
+        self._pankki = pankki
+        self._viitegeneraattori = viitegeneraattori
         self._kaupan_tili = "33333-44455"
 
     def aloita_asiointi(self):
