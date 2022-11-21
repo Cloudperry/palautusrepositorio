@@ -17,6 +17,12 @@ Login With Incorrect Password
     Submit Credentials
     Login Should Fail With Message  Invalid username or password
 
+Login With Nonexistent Username
+	Set Username  roni
+	Set Password  roni123
+	Submit Credentials
+	Login Should Fail With Message  Invalid username or password
+
 *** Keywords ***
 Login Should Succeed
     Main Page Should Be Open
@@ -28,14 +34,6 @@ Login Should Fail With Message
 
 Submit Credentials
     Click Button  Login
-
-Set Username
-    [Arguments]  ${username}
-    Input Text  username  ${username}
-
-Set Password
-    [Arguments]  ${password}
-    Input Password  password  ${password}
 
 Create User And Go To Login Page
     Create User  kalle  kalle123
