@@ -1,3 +1,4 @@
+import re
 from entities.user import User
 
 
@@ -36,5 +37,7 @@ class UserService:
     def validate(self, username, password):
         if not username or not password:
             raise UserInputError("Username and password are required")
-
-        # toteuta loput tarkastukset tänne ja nosta virhe virhetilanteissa
+        elif re.match("^[a-z]{3,}$", username) is None:
+            raise UserInputError("Username is too short or contains characters other than lowercase letters")
+        elif re.match("^[a-zA-Z]+$", password) or len(password) < 8:
+            raise UserInputError("Password is too short or contains only lowercase letters")
