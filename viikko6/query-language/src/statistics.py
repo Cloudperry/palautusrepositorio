@@ -35,7 +35,7 @@ class Statistics:
 
     def matches(self, matcher):
         matching_players = filter(
-            lambda player: matcher.matches(player),
+            lambda player: matcher.test(player),
             self._players
         )
 
