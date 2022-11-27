@@ -7,4 +7,5 @@ class TestOstoskori(unittest.TestCase):
         self.kori = Ostoskori()
 
     def test_ostoskorin_hinta_ja_tavaroiden_maara_alussa(self):
-        self.assertEqual(self.kori.hinta(), 0)
+        assert self.kori.hinta() == 0
+        assert self.kori.ostokset() == []

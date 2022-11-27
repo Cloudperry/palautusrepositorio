@@ -17,18 +17,18 @@ class Ostoskori:
         # kertoo korissa olevien ostosten yhteenlasketun hinnan
 
     def lisaa_tuote(self, lisattava: Tuote):
-        # lisää tuotteen
         pass
+        # lisää tuotteen
 
     def poista_tuote(self, poistettava: Tuote):
-        # poistaa tuotteen
         pass
+        # poistaa tuotteen
 
     def tyhjenna(self):
         pass
         # tyhjentää ostoskorin
 
     def ostokset(self):
-        pass
+        return []
         # palauttaa listan jossa on korissa olevat ostos-oliot
         # kukin ostos-olio siis kertoo mistä tuotteesta on kyse JA kuinka monta kappaletta kyseistä tuotetta korissa on
