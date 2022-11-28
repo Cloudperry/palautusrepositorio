@@ -13,12 +13,15 @@ class Ostoskori:
         return len(self._ostokset)
 
     def hinta(self):
-        return 0
         # kertoo korissa olevien ostosten yhteenlasketun hinnan
+        if len(self._ostokset) == 0:
+            return 0
+        else:
+            return self._ostokset[0].hinta()
 
     def lisaa_tuote(self, lisattava: Tuote):
         # lisää tuotteen
-        self._ostokset = [Ostos(Tuote("Maito", 3))]
+        self._ostokset = [Ostos(lisattava)]
 
     def poista_tuote(self, poistettava: Tuote):
         pass
