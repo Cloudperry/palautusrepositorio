@@ -52,3 +52,10 @@ class TestOstoskori(unittest.TestCase):
 
         ostos = self.kori.ostokset()[0]
         assert ostos.tuote.nimi == maito.nimi and ostos.lukumaara() == 1
+
+    def test_kahden_eri_tuotteen_lisaamisen_jalkeen_korissa_2_ostosta(self):
+        maito = Tuote("Maito", 3)
+        self.kori.lisaa_tuote(maito)
+        peruna = Tuote("Peruna", 1)
+        self.kori.lisaa_tuote(peruna)
+        assert len(self.kori.ostokset()) == 2
