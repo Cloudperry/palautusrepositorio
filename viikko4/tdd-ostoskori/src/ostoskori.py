@@ -17,7 +17,7 @@ class Ostoskori:
         if len(self._ostokset) == 0:
             return 0
         else:
-            return self._ostokset[0].hinta()
+            return self._ostokset[0].tuote.hinta() * self._ostokset[0].lukumaara()
 
     def lisaa_tuote(self, lisattava: Tuote):
         # lisää tuotteen
