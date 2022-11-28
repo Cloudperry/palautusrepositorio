@@ -59,3 +59,9 @@ class TestOstoskori(unittest.TestCase):
         peruna = Tuote("Peruna", 1)
         self.kori.lisaa_tuote(peruna)
         assert len(self.kori.ostokset()) == 2
+
+    def test_kahden_saman_tuotteen_lisaamisen_jalkeen_korissa_1_ostosolio_lukumaaralla_2(self):
+        maito = Tuote("Maito", 3)
+        self.kori.lisaa_tuote(maito)
+        self.kori.lisaa_tuote(maito)
+        assert len(self.kori.ostokset()) == 1
