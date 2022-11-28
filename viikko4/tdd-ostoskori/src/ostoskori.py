@@ -31,8 +31,14 @@ class Ostoskori:
             self._ostokset.append(Ostos(lisattava))
 
     def poista_tuote(self, poistettava: Tuote):
-        pass
         # poistaa tuotteen
+        for i, ostos in enumerate(self._ostokset):
+            if ostos.tuote == poistettava:
+                if ostos.lukumaara() > 1:
+                    ostos.muuta_lukumaaraa(-1)
+                else:
+                    self._ostokset.pop(i) # Remove operaatio olisi hitaampi :D
+                break
 
     def tyhjenna(self):
         pass
