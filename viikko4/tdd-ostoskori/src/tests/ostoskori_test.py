@@ -51,7 +51,7 @@ class TestOstoskori(unittest.TestCase):
         self.kori.lisaa_tuote(maito)
 
         ostos = self.kori.ostokset()[0]
-        assert ostos.tuote.nimi == maito.nimi and ostos.lukumaara() == 1
+        assert ostos.tuote.nimi() == maito.nimi() and ostos.lukumaara() == 1
 
     def test_kahden_eri_tuotteen_lisaamisen_jalkeen_korissa_2_ostosta(self):
         maito = Tuote("Maito", 3)
@@ -60,8 +60,16 @@ class TestOstoskori(unittest.TestCase):
         self.kori.lisaa_tuote(peruna)
         assert len(self.kori.ostokset()) == 2
 
-    def test_kahden_saman_tuotteen_lisaamisen_jalkeen_korissa_1_ostosolio_lukumaaralla_2(self):
+    def test_kahden_saman_tuotteen_lisaamisen_jalkeen_korissa_1_ostosolio(self):
         maito = Tuote("Maito", 3)
         self.kori.lisaa_tuote(maito)
         self.kori.lisaa_tuote(maito)
         assert len(self.kori.ostokset()) == 1
+
+    def test_kahden_saman_tuotteen_lisaamisen_jalkeen_korissa_1_ostosolio_lukumaaralla_2(self):
+        maito = Tuote("Maito", 3)
+        self.kori.lisaa_tuote(maito)
+        self.kori.lisaa_tuote(maito)
+        ostos = self.kori.ostokset()[0]
+        assert ostos.tuote.nimi() == maito.nimi() 
+        assert ostos.lukumaara() == 2
