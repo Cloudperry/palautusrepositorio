@@ -86,3 +86,14 @@ class TestOstoskori(unittest.TestCase):
         self.kori.lisaa_tuote(maito)
         self.kori.poista_tuote(maito)
         assert self.kori.ostokset() == []
+
+    def test_korin_tyhjennys_toimii(self):
+        maito = Tuote("Maito", 3)
+        self.kori.lisaa_tuote(maito)
+        self.kori.lisaa_tuote(maito)
+        self.kori.lisaa_tuote(maito)
+        peruna = Tuote("Peruna", 1)
+        self.kori.lisaa_tuote(peruna)
+        self.kori.lisaa_tuote(peruna)
+        self.kori.tyhjenna()
+        assert self.kori.ostokset() == []
