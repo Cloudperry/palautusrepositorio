@@ -59,4 +59,4 @@ class TestTennis(unittest.TestCase):
         for test_case in test_cases:
             (p1_points, p2_points, score) = test_case
             game = play_game(p1_points, p2_points)
-            self.assertEqual(score, game.get_score())
+            self.assertEqual(score, game.get_score(), f"Failed test case {test_case}.")
