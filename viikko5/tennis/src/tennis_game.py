@@ -21,19 +21,19 @@ class Score:
                 return "Over forty"
 
 class TennisGame:
-    def __init__(self, player1_name, player2_name):
+    def __init__(self, player1_name: str, player2_name: str):
         self.player1_name = player1_name
         self.player2_name = player2_name
         self.player1_score = Score()
         self.player2_score = Score()
 
-    def won_point(self, player_name):
+    def won_point(self, player_name: str):
         if player_name == self.player1_name:
             self.player1_score.num += 1
         else:
             self.player2_score.num += 1
 
-    def get_score(self):
+    def get_score(self) -> str:
         if self.player1_score.num == self.player2_score.num:
             if self.player1_score.num <= Score.Forty:
                 return f"{self.player1_score}-All"
