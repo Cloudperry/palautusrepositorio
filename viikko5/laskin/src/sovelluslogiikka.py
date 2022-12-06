@@ -1,3 +1,15 @@
+class Summa:
+    pass
+
+class Erotus:
+    pass
+
+class Nollaus:
+    pass
+
+class Kumoa:
+    pass
+
 class Sovelluslogiikka:
     def __init__(self, tulos=0):
         self.tulos = tulos
@@ -10,6 +22,9 @@ class Sovelluslogiikka:
 
     def nollaa(self):
         self.tulos = 0
+
+    def kumoa(self):
+        pass
 
     def aseta_arvo(self, arvo):
         self.tulos = arvo
