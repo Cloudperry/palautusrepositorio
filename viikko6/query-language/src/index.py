@@ -57,7 +57,23 @@ def main():
       .hasFewerThan(20, "goals")
       .build()
     )
-    print(matcher)
+    show_matcher_results(stats, matcher)
+
+    # Tehtävä 5 tarkistustulostukset
+    query = QueryBuilder()
+    matcher = (
+      query
+        .oneOf(
+          query.playsIn("PHI")
+              .hasAtLeast(10, "assists")
+              .hasFewerThan(5, "goals")
+              .build(),
+          query.playsIn("EDM")
+              .hasAtLeast(50, "points")
+              .build()
+        )
+        .build()
+    )
     show_matcher_results(stats, matcher)
 
 if __name__ == "__main__":

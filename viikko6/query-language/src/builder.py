@@ -6,6 +6,7 @@ class QueryType(Enum):
     PlaysIn = 1
     HasAtLeast = 2
     HasFewerThan = 3
+    Or = 4
 
 Query = namedtuple("Query", ["type", "args"])
 
@@ -14,30 +15,33 @@ class QueryBuilder:
         self.pino = pino
 
     def playsIn(self, team):
-        # Tämä toteutus ei noudata immutabilityä eli muokaamattomuutta, mutta
-        # tämä on niin yksinkertainen että sille ei ole tarvetta. Olisin käyttänyt
-        # jonkinlaista value tyyppinä toimivaa luokkaa/structia, jos Python tarjoaisi sellaisia.
-        self.pino.append(Query(QueryType.PlaysIn, (team,)))
-        return self
+        uusi_pino = self.pino + [Query(QueryType.PlaysIn, (team,))]
+        return QueryBuilder(uusi_pino)
 
     def hasAtLeast(self, value, attr):
-        self.pino.append(Query(QueryType.HasAtLeast, (value, attr)))
-        return self
+        uusi_pino = self.pino + [Query(QueryType.HasAtLeast, (value, attr))]
+        return QueryBuilder(uusi_pino)
 
     def hasFewerThan(self, value, attr):
-        self.pino.append(Query(QueryType.HasFewerThan, (value, attr)))
-        return self
+        uusi_pino = self.pino + [Query(QueryType.HasFewerThan, (value, attr))]
+        return QueryBuilder(uusi_pino)
 
-    def _querytuple_to_query(self, qt):
-        args = qt.args
-        if qt.type == QueryType.PlaysIn: # Enumin voisi jopa korvata suoraan luokalla
+    def oneOf(self, *queries):
+        uusi_pino = [Query(QueryType.Or, queries)]
+        return QueryBuilder(uusi_pino)
+
+    def _query_to_queryobj(self, query):
+        args = query.args
+        if query.type == QueryType.PlaysIn: # Enumin voisi jopa korvata suoraan luokalla
             # Argumenttien purkaminen näin on ehkä vähän kyseenalaista
             return PlaysIn(*args) 
-        elif qt.type == QueryType.HasAtLeast:
+        elif query.type == QueryType.HasAtLeast:
             return HasAtLeast(*args)
-        elif qt.type == QueryType.HasFewerThan:
+        elif query.type == QueryType.HasFewerThan:
             return HasFewerThan(*args)
+        elif query.type == QueryType.Or:
+            return Or(*args)
 
     def build(self):
-        queries = map(self._querytuple_to_query, self.pino)
+        queries = map(self._query_to_queryobj, self.pino)
         return And(*queries)
