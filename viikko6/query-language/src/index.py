@@ -1,4 +1,5 @@
 from statistics import Statistics
+from builder import QueryBuilder
 from player_reader import PlayerReader
 from matchers import And, HasAtLeast, PlaysIn, HasFewerThan, Not, All, Or
 
@@ -12,6 +13,7 @@ def main():
     reader = PlayerReader(url)
     stats = Statistics(reader)
 
+    # Tehtävä 3 tarkistamistulostukset
     show_matcher_results(stats, And(
         HasAtLeast(5, "goals"),
         HasAtLeast(5, "assists"),
@@ -45,6 +47,18 @@ def main():
             PlaysIn("BOS")
         )
     ))
+
+    # Tehtävä 4 tarkistamistulostukset
+    query = QueryBuilder()
+    matcher = (
+      query
+      .playsIn("NYR")
+      .hasAtLeast(10, "goals")
+      .hasFewerThan(20, "goals")
+      .build()
+    )
+    print(matcher)
+    show_matcher_results(stats, matcher)
 
 if __name__ == "__main__":
     main()
