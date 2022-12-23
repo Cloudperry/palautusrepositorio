@@ -1,5 +1,6 @@
-
 # Luokka pitää kirjaa ensimmäisen ja toisen pelaajan pisteistä sekä tasapelien määrästä.
+from enum import Enum
+
 class Tuomari:
     def __init__(self):
         self.ekan_pisteet = 0
@@ -34,3 +35,6 @@ class Tuomari:
             return True
 
         return False
+    
+    def _onko_ok_siirto(self, siirto):
+        return siirto == "k" or siirto == "p" or siirto == "s"

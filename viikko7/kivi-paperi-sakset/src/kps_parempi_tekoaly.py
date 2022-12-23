@@ -1,29 +1,67 @@
 from tuomari import Tuomari
-from tekoaly_parannettu import TekoalyParannettu
+from kps_kayttoliittyma import KiviPaperiSakset
 
+# "Muistava tekoäly"
+class TekoalyParannettu:
+    def __init__(self, muistin_koko):
+        self._muisti = [None] * muistin_koko
+        self._vapaa_muisti_indeksi = 0
 
-class KPSParempiTekoaly:
-    def pelaa(self):
-        tuomari = Tuomari()
-        tekoaly = TekoalyParannettu(10)
+    def aseta_siirto(self, siirto):
+        # jos muisti täyttyy, unohdetaan viimeinen alkio
+        if self._vapaa_muisti_indeksi == len(self._muisti):
+            for i in range(1, len(self._muisti)):
+                self._muisti[i - 1] = self._muisti[i]
 
-        ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
-        tokan_siirto = tekoaly.anna_siirto()
+            self._vapaa_muisti_indeksi = self._vapaa_muisti_indeksi - 1
 
+        self._muisti[self._vapaa_muisti_indeksi] = siirto
+        self._vapaa_muisti_indeksi = self._vapaa_muisti_indeksi + 1
+
+    def anna_siirto(self):
+        if self._vapaa_muisti_indeksi == 0 or self._vapaa_muisti_indeksi == 1:
+            return "k"
+
+        viimeisin_siirto = self._muisti[self._vapaa_muisti_indeksi - 1]
+
+        k = 0
+        p = 0
+        s = 0
+
+        for i in range(0, self._vapaa_muisti_indeksi - 1):
+            if viimeisin_siirto == self._muisti[i]:
+                seuraava = self._muisti[i + 1]
+
+                if seuraava == "k":
+                    k = k + 1
+                elif seuraava == "p":
+                    p = p + 1
+                else:
+                    s = s + 1
+
+        # Tehdään siirron valinta esimerkiksi seuraavasti;
+        # - jos kiviä eniten, annetaan aina paperi
+        # - jos papereita eniten, annetaan aina sakset
+        # muulloin annetaan aina kivi
+        if k > p or k > s:
+            return "p"
+        elif p > k or p > s:
+            return "s"
+        else:
+            return "k"
+
+        # Tehokkaampiakin tapoja löytyy, mutta niistä lisää
+        # Johdatus Tekoälyyn kurssilla!
+
+class KPSParempiTekoaly(KiviPaperiSakset):
+    def __init__(self):
+        super().__init__()
+        self.tekoaly = TekoalyParannettu(10)
+
+    def _toisen_siirto(self):
+        tokan_siirto = self.tekoaly.anna_siirto()
         print(f"Tietokone valitsi: {tokan_siirto}")
+        return tokan_siirto
 
-        while self._onko_ok_siirto(ekan_siirto) and self._onko_ok_siirto(tokan_siirto):
-            tuomari.kirjaa_siirto(ekan_siirto, tokan_siirto)
-            print(tuomari)
-
-            ekan_siirto = input("Ensimmäisen pelaajan siirto: ")
-            tokan_siirto = tekoaly.anna_siirto()
-
-            print(f"Tietokone valitsi: {tokan_siirto}")
-            tekoaly.aseta_siirto(ekan_siirto)
-
-        print("Kiitos!")
-        print(tuomari)
-
-    def _onko_ok_siirto(self, siirto):
-        return siirto == "k" or siirto == "p" or siirto == "s"
+    def _aseta_ekan_siirto(self, siirto):
+        self.tekoaly.aseta_siirto(siirto)
